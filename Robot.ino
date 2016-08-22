@@ -18,7 +18,9 @@ class Motor
   int directionControlPin_01;  // Direction Control 01
   int directionControlPin_02;  // Direction Control 02
   int pwmPin;
-
+  // Read this on a better way to deal with the constructor
+  // https://pragprog.com/magazines/2011-04/advanced-arduino-hacking
+  // 
   // Constructor
   public:
   Motor(int directionControlInput_01, int directionControlInput_02, int pwmInput)
