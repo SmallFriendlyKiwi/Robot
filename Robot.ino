@@ -14,13 +14,6 @@ const int boost_time = 50;     // Time in milliseconds for boost_speed
 
 class Motor
 {
-  // Member Variables
-  private:
-    int _direction_control_pin_01;
-    int _direction_control_pin_02;
-    int _pwm_pin;
-  
-  // Constructor
   public:
     Motor(int direction_control_pin_01,
           int direction_control_pin_02,
@@ -54,6 +47,11 @@ class Motor
     // Now set the requested PWM
     analogWrite(_pwm_pin, pwm_ratio);
   }
+    
+  private:
+    int _direction_control_pin_01;
+    int _direction_control_pin_02;
+    int _pwm_pin;
 };
 
 void setup()
