@@ -8,75 +8,76 @@ const int in4 = 4;  // Motor 2 Direction Control
 const int enB = 6;  // Motor 2 Enable or PWM
 
 // Other stuff
-const int minSpeed = 48;      // Minimum motor speed
-const int boostSpeed = 128;   // Boost speed to get the motor moving
-const int boostTime = 50;     // Time in milliseconds for boostSpeed
+const int min_speed = 48;      // Minimum motor speed
+const int boost_speed = 128;   // Boost speed to get the motor moving
+const int boost_time = 50;     // Time in milliseconds for boost_speed
 
 class Motor
 {
   // Member Variables
-  int directionControlPin_01;  // Direction Control 01
-  int directionControlPin_02;  // Direction Control 02
-  int pwmPin;
-  // Read this on a better way to deal with the constructor
-  // https://pragprog.com/magazines/2011-04/advanced-arduino-hacking
-  // 
+  private:
+    int _direction_control_pin_01;
+    int _direction_control_pin_02;
+    int _pwm_pin;
+  
   // Constructor
   public:
-  Motor(int directionControlInput_01, int directionControlInput_02, int pwmInput)
-  {
-    directionControlPin_01 = directionControlInput_01;
-    directionControlPin_02 = directionControlInput_02;
-    pwmPin = pwmInput;
-    
-    pinMode(directionControlPin_01, OUTPUT);
-    pinMode(directionControlPin_02, OUTPUT);
-    pinMode(pwmPin, OUTPUT);
-  }
+    Motor(int direction_control_pin_01,
+          int direction_control_pin_02,
+          int pwm_pin)
+          : _direction_control_pin_01(direction_control_pin_01),
+            _direction_control_pin_02(direction_control_pin_02),
+            _pwm_pin(pwm_pin)
+    { 
+      pinMode(_direction_control_pin_01, OUTPUT);
+      pinMode(_direction_control_pin_02, OUTPUT);
+      pinMode(_pwm_pin, OUTPUT);
+    }
 
   void ConfigForwards()
   {
-    digitalWrite(directionControlPin_01, HIGH);
-    digitalWrite(directionControlPin_02, LOW);
+    digitalWrite(_direction_control_pin_01, HIGH);
+    digitalWrite(_direction_control_pin_02, LOW);
   }
   
   void ConfigBackwards()
   {
-    digitalWrite(directionControlPin_01, LOW);
-    digitalWrite(directionControlPin_02, HIGH);
+    digitalWrite(_direction_control_pin_01, LOW);
+    digitalWrite(_direction_control_pin_02, HIGH);
   }
   
-  void PowerUp(int pwmRatio)
+  void PowerUp(int pwm_ratio, int boost_speed, int boost_time)
   {
     // Give the motor a kick to get it going in case a low PWM ratio is passed in
-    analogWrite(pwmPin, boostSpeed);
-    delay(boostTime);
+    analogWrite(_pwm_pin, boost_speed);
+    delay(boost_time);
     // Now set the requested PWM
-    analogWrite(pwmPin, pwmRatio);
+    analogWrite(_pwm_pin, pwm_ratio);
   }
 };
 
+void setup()
+{
+}
+
+// Delare two motor instances
 Motor LHMotor(in1, in2, enA);
 Motor RHMotor(in3, in4, enB);
 
-void setup()
-  {
-    while(true)
-    {
-      delay(500);
-      RHMotor.ConfigForwards();
-      LHMotor.ConfigForwards();
-      RHMotor.PowerUp(minSpeed);
-      LHMotor.PowerUp(minSpeed);
-      delay(500);
-      RHMotor.ConfigBackwards();
-      LHMotor.ConfigBackwards();
-      RHMotor.PowerUp(minSpeed);
-      LHMotor.PowerUp(minSpeed);
-    }
-  }
-
+// The main code loop runs here
 void loop()
+{
+  while(true)
   {
-
+    delay(2000);
+    RHMotor.ConfigForwards();
+    LHMotor.ConfigBackwards();
+    RHMotor.PowerUp(min_speed, boost_speed, boost_time);
+    LHMotor.PowerUp(min_speed, boost_speed, boost_time);
+    delay(2000);
+    RHMotor.ConfigBackwards();
+    LHMotor.ConfigForwards();
+    RHMotor.PowerUp(min_speed, boost_speed, boost_time);
+    LHMotor.PowerUp(min_speed, boost_speed, boost_time);
   }
+}
