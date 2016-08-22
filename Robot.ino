@@ -1,4 +1,4 @@
-// Pin assignments
+// Arduino Uno pin assignments
 const int in1 = 2;  // Motor 1 Direction Control
 const int in2 = 3;  // Motor 1 Direction Control
 const int enA = 5;  // Motor 1 Enable or PWM
