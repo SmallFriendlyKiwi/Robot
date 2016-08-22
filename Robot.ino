@@ -1,4 +1,4 @@
-// Arduino Uno pin assignments
+// PWM PCB to Arduino Uno pin assignments
 const int in1 = 2;  // Motor 1 Direction Control
 const int in2 = 3;  // Motor 1 Direction Control
 const int enA = 5;  // Motor 1 Enable or PWM
@@ -15,33 +15,33 @@ const int boostTime = 50;     // Time in milliseconds for boostSpeed
 class Motor
 {
   // Member Variables
-  int dcAPin;  // Direction Control A
-  int dcBPin;  // Direction Control B
+  int directionControlPin_01;  // Direction Control 01
+  int directionControlPin_02;  // Direction Control 02
   int pwmPin;
 
   // Constructor
   public:
-  Motor(int xdcAPin, int xdcBPin, int xpwmPin)
+  Motor(int directionControlInput_01, int directionControlInput_02, int pwmInput)
   {
-    dcAPin = xdcAPin;
-    dcBPin = xdcBPin;
-    pwmPin = xpwmPin;
+    directionControlPin_01 = directionControlInput_01;
+    directionControlPin_02 = directionControlInput_02;
+    pwmPin = pwmInput;
     
-    pinMode(dcAPin, OUTPUT);
-    pinMode(dcBPin, OUTPUT);
+    pinMode(directionControlPin_01, OUTPUT);
+    pinMode(directionControlPin_02, OUTPUT);
     pinMode(pwmPin, OUTPUT);
   }
 
   void ConfigForwards()
   {
-    digitalWrite(dcAPin, HIGH);
-    digitalWrite(dcBPin, LOW);
+    digitalWrite(directionControlPin_01, HIGH);
+    digitalWrite(directionControlPin_02, LOW);
   }
   
   void ConfigBackwards()
   {
-    digitalWrite(dcAPin, LOW);
-    digitalWrite(dcBPin,HIGH);
+    digitalWrite(directionControlPin_01, LOW);
+    digitalWrite(directionControlPin_02, HIGH);
   }
   
   void PowerUp(int pwmRatio)
