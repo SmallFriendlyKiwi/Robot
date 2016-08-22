@@ -1,14 +1,16 @@
-const int in1 = 2;
-const int in2 = 3;
-const int enA = 5;
+// Pin assignments
+const int in1 = 2;  // Motor 1 Direction Control
+const int in2 = 3;  // Motor 1 Direction Control
+const int enA = 5;  // Motor 1 Enable or PWM
 
-const int in3 = 7;
-const int in4 = 4;
-const int enB = 6;
+const int in3 = 7;  // Motor 2 Direction Control
+const int in4 = 4;  // Motor 2 Direction Control
+const int enB = 6;  // Motor 2 Enable or PWM
 
-const int minSpeed = 48;
-const int boostSpeed = 128;
-const int boostTime = 50;
+// Other stuff
+const int minSpeed = 48;      // Minimum motor speed
+const int boostSpeed = 128;   // Boost speed to get the motor moving
+const int boostTime = 50;     // Time in milliseconds for boostSpeed
 
 class Motor
 {
