@@ -1,10 +1,4 @@
 #include <NewPing.h>
- 
-#define TRIGGER_PIN  12
-#define ECHO_PIN     11
-#define MAX_DISTANCE 200
- 
-NewPing sonar(TRIGGER_PIN, ECHO_PIN, MAX_DISTANCE);
 
 // PWM PCB to Arduino Uno pin assignments
 const int in1 = 2;  // Motor 1 Direction Control
@@ -19,9 +13,14 @@ const int enB = 6;  // Motor 2 Enable or PWM
 const int min_speed = 48;      // Minimum motor speed
 const int boost_speed = 128;   // Boost speed to get the motor moving
 const int boost_time = 50;     // Time in milliseconds for boost_speed
-
 const int min_object_distance = 20;  // Minimum distance to an object that will
                                      // cause the robot to stop 
+// Sonar stuff
+const int sonar_trigger_pin = 12;
+const int sonar_echo_pin = 11;
+const int sonar_max_distance = 200;
+ 
+NewPing sonar(sonar_trigger_pin, sonar_echo_pin, sonar_max_distance);
 
 int get_distance(NewPing sonar)
   {
