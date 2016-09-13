@@ -46,14 +46,14 @@ class Motor
 
   void ConfigForwards()
   {
-    digitalWrite(_direction_control_pin_01, HIGH);
-    digitalWrite(_direction_control_pin_02, LOW);
+    digitalWrite(_direction_control_pin_01, LOW);
+    digitalWrite(_direction_control_pin_02, HIGH);
   }
   
   void ConfigBackwards()
   {
-    digitalWrite(_direction_control_pin_01, LOW);
-    digitalWrite(_direction_control_pin_02, HIGH);
+    digitalWrite(_direction_control_pin_01, HIGH);
+    digitalWrite(_direction_control_pin_02, LOW);
   }
   
   void ConfigStopped()
