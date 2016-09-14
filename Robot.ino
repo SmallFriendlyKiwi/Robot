@@ -13,7 +13,7 @@ const int enB = 6;  // Motor 2 Enable or PWM
 const int min_speed = 48;      // Minimum motor speed
 const int boost_speed = 128;   // Boost speed to get the motor moving
 const int boost_time = 50;     // Time in milliseconds for boost_speed
-const int min_object_distance = 20;  // Minimum distance to an object that will
+const int min_object_distance = 10;  // Minimum distance to an object that will
                                      // cause the robot to stop 
 // Sonar stuff
 const int sonar_trigger_pin = 12;
@@ -24,9 +24,10 @@ NewPing sonar(sonar_trigger_pin, sonar_echo_pin, sonar_max_distance);
 
 int get_distance(NewPing sonar)
   {
-     int uS = sonar.ping();
-     int distance = uS / US_ROUNDTRIP_CM;
-     return distance;
+    int micro_seconds = sonar.ping_median(10);
+    int distance = sonar.convert_cm(micro_seconds);
+    // Serial.println(distance); 
+    return distance;
   }
 
 class Motor
