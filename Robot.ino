@@ -45,19 +45,19 @@ class Motor
       pinMode(_pwm_pin, OUTPUT);
     }
 
-  void ConfigForwards()
+  void EnableForwards()
   {
     digitalWrite(_direction_control_pin_01, LOW);
     digitalWrite(_direction_control_pin_02, HIGH);
   }
   
-  void ConfigBackwards()
+  void EnableBackwards()
   {
     digitalWrite(_direction_control_pin_01, HIGH);
     digitalWrite(_direction_control_pin_02, LOW);
   }
   
-  void ConfigStopped()
+  void Disable()
   {
     digitalWrite(_direction_control_pin_01, LOW);
     digitalWrite(_direction_control_pin_02, LOW);
@@ -93,7 +93,7 @@ void loop()
   int object_distance;
   boolean motors_stopped;
   
-  motors_stopped == false;
+  motors_stopped == true;
   
   while(true)
   {
@@ -103,10 +103,12 @@ void loop()
     {
       // Move ahead!!!
       Serial.println("The path ahead is clear for the robot to proceed...");
+      Serial.println(motors_stopped);
       if (motors_stopped == true)  // Only run the code below when transitioning from stopped to started
       {
-        RHMotor.ConfigForwards();
-        LHMotor.ConfigForwards();
+        Serial.println("Starting motors...");
+        RHMotor.EnableForwards();
+        LHMotor.EnableForwards();
         RHMotor.PowerUp(min_speed, boost_speed, boost_time);
         LHMotor.PowerUp(min_speed, boost_speed, boost_time);
         motors_stopped = false;
@@ -116,11 +118,20 @@ void loop()
     {
       // Stop!!!
       Serial.println("STOP - There's an object approaching...");
-      RHMotor.ConfigStopped();
-      LHMotor.ConfigStopped();
+      RHMotor.Disable();
+      LHMotor.Disable();
+      
+      // Reverse and turn a bit
+      RHMotor.EnableBackwards();
+      LHMotor.EnableBackwards();
+      RHMotor.PowerUp(min_speed * 2, boost_speed, boost_time);
+      LHMotor.PowerUp(min_speed, boost_speed, boost_time);
+      delay(500);
+      
+      RHMotor.Disable();
+      LHMotor.Disable();
       
       motors_stopped = true;
     } 
-    
   }
 }
