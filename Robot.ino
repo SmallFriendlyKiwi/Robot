@@ -1,5 +1,7 @@
 #include <NewPing.h>
 
+#include <NewPing.h>
+
 // PWM PCB to Arduino Uno pin assignments
 const int in1 = 2;  // Motor 1 Direction Control
 const int in2 = 3;  // Motor 1 Direction Control
@@ -13,7 +15,7 @@ const int enB = 6;  // Motor 2 Enable or PWM
 const int min_speed = 48;      // Minimum motor speed
 const int boost_speed = 128;   // Boost speed to get the motor moving
 const int boost_time = 50;     // Time in milliseconds for boost_speed
-const int min_object_distance = 10;  // Minimum distance to an object that will
+const int min_object_distance = 15;  // Minimum distance to an object that will
                                      // cause the robot to stop 
 // Sonar stuff
 const int sonar_trigger_pin = 12;
@@ -24,7 +26,7 @@ NewPing sonar(sonar_trigger_pin, sonar_echo_pin, sonar_max_distance);
 
 int get_distance(NewPing sonar)
   {
-    int micro_seconds = sonar.ping_median(10);
+    int micro_seconds = sonar.ping_median(2);
     int distance = sonar.convert_cm(micro_seconds);
     // Serial.println(distance); 
     return distance;
@@ -121,13 +123,66 @@ void loop()
       RHMotor.Disable();
       LHMotor.Disable();
       
-      // Reverse and turn a bit
+      // Turn right about 45 degrees
       RHMotor.EnableBackwards();
-      LHMotor.EnableBackwards();
-      RHMotor.PowerUp(min_speed * 2, boost_speed, boost_time);
+      LHMotor.EnableForwards();
+      RHMotor.PowerUp(min_speed, boost_speed, boost_time);
       LHMotor.PowerUp(min_speed, boost_speed, boost_time);
-      delay(500);
+      delay(2500);
+      RHMotor.Disable();
+      LHMotor.Disable();
+
+      // Move forwards...
+      RHMotor.EnableForwards();
+      LHMotor.EnableForwards();
+      RHMotor.PowerUp(min_speed, boost_speed, boost_time);
+      LHMotor.PowerUp(min_speed, boost_speed, boost_time);
+      delay(1500);
+      RHMotor.Disable();
+      LHMotor.Disable();
+
+      //Turn Left about 45 degrees
+      LHMotor.EnableBackwards();
+      RHMotor.EnableForwards();
+      RHMotor.PowerUp(min_speed, boost_speed, boost_time);
+      LHMotor.PowerUp(min_speed, boost_speed, boost_time);
+      delay(250);
+      RHMotor.Disable();
+      LHMotor.Disable();
+
+      // Move forwards...
+      RHMotor.EnableForwards();
+      LHMotor.EnableForwards();
+      RHMotor.PowerUp(min_speed, boost_speed, boost_time);
+      LHMotor.PowerUp(min_speed, boost_speed, boost_time);
+      delay(2500);
+      RHMotor.Disable();
+      LHMotor.Disable();
       
+      //Turn Left about 45 degrees
+      LHMotor.EnableBackwards();
+      RHMotor.EnableForwards();
+      RHMotor.PowerUp(min_speed, boost_speed, boost_time);
+      LHMotor.PowerUp(min_speed, boost_speed, boost_time);
+      delay(250);
+      RHMotor.Disable();
+      LHMotor.Disable();
+
+      // Move forwards...
+      RHMotor.EnableForwards();
+      LHMotor.EnableForwards();
+      RHMotor.PowerUp(min_speed, boost_speed, boost_time);
+      LHMotor.PowerUp(min_speed, boost_speed, boost_time);
+      delay(1500);
+      RHMotor.Disable();
+      LHMotor.Disable();
+
+      // Turn right about 45 degrees
+      RHMotor.EnableBackwards();
+      LHMotor.EnableForwards();
+      RHMotor.PowerUp(min_speed, boost_speed, boost_time);
+      LHMotor.PowerUp(min_speed, boost_speed, boost_time);
+      delay(250);
       RHMotor.Disable();
       LHMotor.Disable();
       
